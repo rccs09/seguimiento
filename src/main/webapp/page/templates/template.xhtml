@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head>
+	<ui:include src="/page/templates/header.xhtml" />
+</h:head> 
+<h:body class="dmm">
+	<div id="banner" style="height: auto;">
+		<ui:include src="/page/templates/banner.xhtml" />
+	</div>
+	<div id="wrapper"  class="wrapper" >
+		<div id="menu">
+			<ui:include src="/page/templates/menu.xhtml" />
+		</div>
+		<div id="mensajeGlobal">
+			<p:messages autoUpdate="true" globalOnly="true" />
+		</div>
+		<div id="contenido">
+			<ui:insert name="body"></ui:insert>
+		</div>
+	</div>
+	<div id="foot">
+		<ui:include src="/page/templates/foot.xhtml" />
+	</div>
+
+</h:body> 
+</html>

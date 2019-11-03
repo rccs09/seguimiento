@@ -1,4 +1,4 @@
-package com.rccs.seguimiento.seguimiento;
+package com.rccs.seguimiento;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

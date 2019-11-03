@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">   
+
+	<h:body>
+		<h:form>
+			<p:menubar>
+				<p:submenu label="Registro" >
+					<p:menuitem value="Tickets" action="ticketList" ajax="false"  />
+				</p:submenu>
+				
+				<p:submenu label="Ope" >
+					<p:menuitem value="Generar Dummy" action="#{genDummyController.initController}" ajax="false"  />
+				</p:submenu>
+			</p:menubar>
+		</h:form>
+	</h:body> 
+</html>

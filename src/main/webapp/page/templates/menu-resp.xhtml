@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">   
+
+	<h:body>
+		<h:form>
+			<p:menubar>
+				<p:submenu label="Soporte Técnico" rendered="#{indexForm.soporte}">
+					<p:menuitem value="Datos empleado" action="administracionSoporte" ajax="false" rendered="#{indexForm.soporte}" />
+					<p:menuitem value="Activar/Inactivar usuarios" action="bloquearUsuarios" ajax="false" rendered="#{indexForm.soporte}"/>
+				</p:submenu>
+				<p:submenu label="Procesos" rendered="#{indexForm.usuario}">
+					<p:menuitem value="Actualizar mis datos" action="#{usuGeneralForm.irEditarUsuario(indexForm.frmIdxUsuario)}" ajax="false" />
+				</p:submenu>
+				<p:submenu label="RRHH" rendered="#{indexForm.usuarioRrhh}">
+					<p:menuitem value="Datos empleado" action="usuarioRRHH" ajax="false" rendered="#{indexForm.usuarioRrhh}" />
+				</p:submenu>
+				<p:submenu label="Administración RRHH" rendered="#{indexForm.administradorRrhh}">
+					<p:menuitem value="Datos empleado" action="administracionRRHH" ajax="false" rendered="#{indexForm.administradorRrhh}" />
+				</p:submenu>
+				<p:submenu label="Administración" rendered="#{indexForm.administradorFacultad}">
+					<p:menuitem value="Agregar empleado" action="#{agregarEmpleadoForm.irAgregarEmpleado(indexForm.frmIdxUsuario)}" ajax="false" />
+					<p:menuitem value="Ver usuarios" action="#{verUsuarioForm.irVerUsuario()}" ajax="false" />
+				</p:submenu>
+				<p:submenu label="Configuración" rendered="#{indexForm.superAdministrador}">
+					<p:menuitem value="Institución bancaria" action="#{administradorBancoForm.irBanco()}" ajax="false" rendered="#{indexForm.superAdministrador}"/>
+					<p:menuitem value="Cargo" action="#{administracionCargoForm.irAlistarCargo()}" ajax="false" rendered="#{indexForm.superAdministrador}"/>
+					<p:menuitem value="Dependencia" action="#{administracionDependenciaForm.irAlistarDependencia()}" ajax="false" rendered="#{indexForm.superAdministrador}" />
+					<p:menuitem value="Enfermedad catastrófica" action="#{administradorEnfermedadCatastroficaForm.irEnfermedadCatastrofica()}" ajax="false" rendered="#{indexForm.superAdministrador}"/>
+					<p:menuitem value="Etnia" action="#{administradorEtniaForm.irEtnia()}" ajax="false" rendered="#{indexForm.superAdministrador}"/>
+					<p:menuitem value="Institución académica" action="#{administradorInstitucionAcademicaForm.irInstitucionAcademica()}" ajax="false" rendered="#{indexForm.superAdministrador}"/>
+					<p:menuitem value="Régimen" action="#{administradorRegimenForm.irRegimen()}" ajax="false" rendered="#{indexForm.superAdministrador}"/>
+					<p:menuitem value="Base de revista indexada" action="#{administracionBaseRevIndexadaForm.irAlistarBaseRevIndexada()}" ajax="false" rendered="#{indexForm.superAdministrador}" />
+					<p:menuitem value="Tiempo de dedicación" action="#{administracionTiempoDedicacionForm.irAlistarTiempoDedicacion()}" ajax="false" rendered="#{indexForm.superAdministrador}" />
+					<p:menuitem value="Tipo servidor" action="#{administracionTipoServidorForm.irAlistarTipoServidor()}" ajax="false" rendered="#{indexForm.superAdministrador}" />
+					<p:menuitem value="Ubicación" action="#{administracionUbicacionForm.irAlistarUbicacion()}" ajax="false" rendered="#{indexForm.superAdministrador}" />
+				</p:submenu>
+				<p:submenu label="Consulta" rendered="#{indexForm.consultor}">
+					<p:menuitem value="Datos empleado" action="#{consultorGeneralForm.irListarConsultor(indexForm.frmIdxUsuario)}" ajax="false" rendered="#{indexForm.consultor}" />
+					<p:menuitem value="Reportes" action="#{consultorGeneralForm.irListarReporte(indexForm.frmIdxUsuario)}" ajax="false" rendered="#{indexForm.consultor}" />
+				</p:submenu>
+				<f:facet name="options">
+					<a href="#{request.contextPath}/j_spring_security_logout">Salir del Sistema</a>
+				</f:facet>
+			</p:menubar>
+		</h:form>
+	</h:body> 
+</html>

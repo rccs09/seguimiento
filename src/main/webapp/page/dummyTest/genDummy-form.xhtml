@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+<ui:composition template="/page/templates/template.xhtml">
+<ui:define name="body">
+	<h:form id="frmVer">
+		<p:panel id="pnlEdit" header="Generar respuesta personalizada" position="center"  style="margin-bottom:20px">
+			<!-- ******************** TABLA RESPONSIVA ************************ -->
+			<div class="grid condensed">
+				<!-- ******************** FILA NUMERO 1 ************************ -->
+				<div class="row cells12">
+					<!-- Status -->
+					<div class="cell colspan3">
+						<ui:decorate template="/page/templates/generalEdit.xhtml">
+							<ui:define name="label">
+								<p:outputLabel id="lblStatus" for="txtStatus" value="Status code: "/>
+							</ui:define>
+							<ui:define name="value">
+								<h:selectOneMenu id="txtStatus" value="#{genDummyController.dmrs.dmrsStatus}"
+									required="true" requiredMessage="VALOR REQUERIDO" style="width: 100%;">
+									<f:selectItem itemLabel="SELECCIONE..." />
+									<f:selectItems var="item"  value="#{genDummyController.statusListGd}"
+										itemValue="#{item.sttId}" itemLabel="#{item.sttCode} #{item.sttDescription}" />
+									<p:ajax event="change" update="lblStatus , txtStatus , msgStatus " />
+								</h:selectOneMenu>
+							</ui:define>
+							<ui:define name="msgError">
+								<p:message id="msgStatus" for="txtStatus"/>
+							</ui:define>
+						</ui:decorate>
+					</div>
+				</div>
+				
+				<!-- ******************** FILA NUMERO 2 ************************ -->
+				<div class="row cells12">
+					<!-- Content type -->
+					<div class="cell colspan3">
+						<ui:decorate template="/page/templates/generalEdit.xhtml">
+							<ui:define name="label">
+								<p:outputLabel id="lblContent" for="txtContent" value="Content type: "/>
+							</ui:define>
+							<ui:define name="value">
+								<h:selectOneMenu id="txtContent" value="#{genDummyController.dmrs.dmrsContentType}"
+									required="true" requiredMessage="VALOR REQUERIDO" style="width: 100%;">
+									<f:selectItem itemLabel="SELECCIONE..." />
+									<f:selectItems var="item"  value="#{listCbmController.contentTypeList}"
+										itemLabel="#{item.mimeVal.getType()}/#{item.mimeVal.getSubtype()}" itemValue="#{item.mimeId}" />
+									<p:ajax event="change" update="lblContent , txtContent , msgContent " />
+								</h:selectOneMenu>
+							</ui:define>
+							<ui:define name="msgError">
+								<p:message id="msgContent" for="txtContent"/>
+							</ui:define>
+						</ui:decorate>
+					</div>
+					<!-- codificacion -->
+					<div class="cell colspan3">
+						<ui:decorate template="/page/templates/generalEdit.xhtml">
+							<ui:define name="label">
+								<p:outputLabel id="lblCodec" for="txtCodec" value="Codec: "/>
+							</ui:define>
+							<ui:define name="value">
+								<h:selectOneMenu id="txtCodec" value="#{genDummyController.dmrs.dmrsEncode}"
+									required="true" requiredMessage="VALOR REQUERIDO" style="width: 100%;">
+									<f:selectItem itemLabel="SELECCIONE..." />
+									<f:selectItems var="item"  value="#{listCbmController.codificationList}"
+										itemLabel="#{item.label}" itemValue="#{item.value}" />
+									<p:ajax event="change" update="lblCodec , txtCodec , msgCodec " />
+								</h:selectOneMenu>
+							</ui:define>
+							<ui:define name="msgError">
+								<p:message id="msgCodec" for="txtCodec"/>
+							</ui:define>
+						</ui:decorate>
+					</div>
+				</div>
+				
+				<!-- ******************** FILA NUMERO 1 ************************ -->
+				<div class="row cells12">
+					<!-- body -->
+					<div class="cell colspan3">
+						<ui:decorate template="/page/templates/generalEdit.xhtml">
+							<ui:define name="label">
+								<p:outputLabel id="lblBody" for="txtBody" value="Body: "/>
+							</ui:define>
+							<ui:define name="value">
+								<p:inputTextarea id="txtBody" value="#{genDummyController.dmrs.dmrsBody}"
+										required="true" rows="6" cols="60" autoResize="false" 
+										requiredMessage="CAMPO REQUERIDO"  >
+									<f:validateLength maximum="5000"/>
+									<p:ajax event="blur" update="lblBody , txtBody , msgBody " />
+								</p:inputTextarea>	
+							</ui:define>
+							<ui:define name="msgError">
+								<p:message id="msgBody" for="txtBody"/>
+							</ui:define>
+						</ui:decorate>
+					</div>
+				</div>
+			</div>
+			
+		
+		</p:panel>
+		<div style="margin-top: 10px; margin-bottom: 10px;">
+			<p:commandButton id="btnGuardar" value="Generar response" action="#{genDummyController.save}" ajax="false" />
+			<p:commandButton id="btnCancelarNuevo" value="Cancelar" action="#{genDummyController.cancelar}" 
+				 immediate="true" ajax="false" style="margin-left: 5px;"/>	 
+		</div>
+	</h:form>		
+</ui:define>
+</ui:composition>
+</html>
