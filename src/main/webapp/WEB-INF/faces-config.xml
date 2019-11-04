@@ -32,11 +32,40 @@
 	</navigation-rule>
 	  	  
 	<navigation-rule>
-		<from-view-id>/page/admin/status/list-form.xhtml</from-view-id>
-	  	<!-- Navegacion hasta el xhtml registro -->
+		<from-view-id>/page/admin/tickets/list-form.xhtml</from-view-id>
+	  	<!-- Navegacion hasta el xhtml detalle -->
 	  	<navigation-case>
-	   		<from-outcome>statusEdit</from-outcome>
-	   		<to-view-id>/page/admin/status/edit-form.xhtml</to-view-id>
+	   		<from-outcome>verDetalle</from-outcome>
+	   		<to-view-id>/page/admin/tickets/list-detalles.xhtml</to-view-id>
+	  	</navigation-case>
+	  	<!-- Navegacion hasta el xhtml nuevo ticket -->
+	  	<navigation-case>
+	   		<from-outcome>irNuevoTicket</from-outcome>
+	   		<to-view-id>/page/admin/tickets/edit-ticket-form.xhtml</to-view-id>
 	  	</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/page/admin/tickets/edit-ticket-form.xhtml</from-view-id>
+	  	<!-- Navegacion hasta el xhtml detalle -->
+	  	<navigation-case>
+	   		<from-outcome>cancelNuevoTicket</from-outcome>
+	   		<to-view-id>/page/admin/tickets/list-form.xhtml</to-view-id>
+	  	</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/page/admin/tickets/list-detalles.xhtml</from-view-id>
+	  	<!-- Navegacion hasta el xhtml registro -->
+	  	<navigation-case>
+	   		<from-outcome>returnList</from-outcome>
+	   		<to-view-id>/page/admin/tickets/list-form.xhtml</to-view-id>
+	  	</navigation-case>
+	  	<!-- Navegacion hasta el xhtml registro -->
+	  	<navigation-case>
+	   		<from-outcome>irNuevoDetalle</from-outcome>
+	   		<to-view-id>/page/admin/tickets/list-form.xhtml</to-view-id>
+	  	</navigation-case>
+	</navigation-rule>
+	
 </faces-config>

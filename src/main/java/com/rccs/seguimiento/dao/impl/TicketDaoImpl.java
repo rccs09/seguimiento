@@ -92,17 +92,6 @@ public class TicketDaoImpl extends JdbcDaoSupport implements TicketDao{
 		
 		final KeyHolder holder = new GeneratedKeyHolder();
 		return getJdbcTemplate().update(psc, holder);
-//		int newId = 0;
-//		List<Map<String, Object>> lista = holder.getKeyList();
-//		for (Map<String, Object> map : lista) {
-//			newId = ((Integer)map.get("dmrs_id")).intValue();
-//			break;
-//		}
-//		String code = Constants.SUFIX_CODE.concat(Utilities.stringCompleteLeft(newId+"", Constants.NUM_DIG_CODE, Constants.WILDCARD_CODE));
-//		dummy.setDmrsCode(code);
-//		dummy.setDmrsId(newId);
-//		update(dummy);
-//		return code;
 	}
 	
 	@Override

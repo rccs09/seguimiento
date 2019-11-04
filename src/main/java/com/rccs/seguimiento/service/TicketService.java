@@ -2,10 +2,11 @@ package com.rccs.seguimiento.service;
 
 import java.util.List;
 
+import com.rccs.seguimiento.dto.TicketDto;
 import com.rccs.seguimiento.model.Ticket;
 
 public interface TicketService {
-	List<Ticket> findByCode(String code);
+	List<TicketDto> findByCode(String code);
 	
 	long save(Ticket t);
 	

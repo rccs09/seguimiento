@@ -11,7 +11,7 @@
 				<p:panel id="pnlSearch" header="Búsqueda de Ticket" >
 					<h:panelGrid columns="2">
 						<h:outputLabel for="fndCode" value="Codigo:" style="font-weight:bold" />
-						<p:inputText id="fndCode" value="#{ticketController.ticketFound.tckCode}"/>
+						<p:inputText id="fndCode" value="#{ticketController.ticketFound.ticket.tckCode}"/>
 					
 						<p:commandButton id="btnBuscar" value="Buscar"  action="#{ticketController.findByCode()}"
 								update=":frmLista:pnlResultados"/> 
@@ -26,34 +26,48 @@
 		                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 		                         rowsPerPageTemplate="5,10,15">
 		                         
-				        <p:column headerText="Codigo">
-				            <h:outputText value="#{item.tckCode}" />
+				        <p:column headerText="Código">
+				            <h:outputText value="#{item.ticket.tckCode}" />
 				        </p:column>
 				        
-				        <p:column headerText="Descripcion">
-				            <h:outputText value="#{item.tckUrl}"  />
+				        <p:column headerText="Url">
+				            <h:outputText value="#{item.ticket.tckUrl}"  />
+				        </p:column>
+				        
+				        <p:column headerText="Tipo">
+				            <h:outputText value="#{item.tckTypeSt}"  />
+				        </p:column>
+				        
+				         <p:column headerText="Estado">
+				            <h:outputText value="#{item.tckStatusSt}"  />
+				        </p:column>
+				        
+				        <p:column headerText="Flujo">
+				            <h:outputText value="#{item.tckFlowSt}"  />
 				        </p:column>
 
 				        <p:column headerText="Opción" style="width:16%;text-align: center">
-				        	<p:commandLink value="Editar" action="#{ticketController.editStatus(item)}" ajax="false" style="margin-left: 5px;"/>
+				        	<p:commandButton id="btnEdit" value="Editar" action="#{ticketController.irEditarTicket(item)}" style="margin-left: 5px;" />
+				        	<p:commandButton id="btnDet" value="Detalles" action="#{ticketController.verDetalle(item)}" style="margin-left: 5px;" />
+				        	
 							<!-- 	
 				        	<p:commandLink value="Ver" action="#{administradorBancoForm.irVer(item)}" style="margin-left: 5px;"/>
 				        	
 				        	<p:commandLink value="Eliminar" action="#{administradorBancoForm.irModalEliminar(item)}" style="margin-left: 5px;">
 				        		<p:ajax oncomplete="PF('dialogoEliminarBanco').show();" update=":frmModalBancoEliminar"/>
 				        	</p:commandLink>
+				        	
 				        	 -->
 				        </p:column>
 				         
 				        
 				    </p:dataTable>
-				    <!-- 
+				    
 				    <div style="margin-top: 10px; margin-bottom: 10px;">
-				   		<p:commandButton id="btnCrear" value="Crear Nuevo" action="#{administradorBancoForm.irCrearNuevo}" style="margin-left: 5px;" />
+				   		<p:commandButton id="btnCrear" value="Crear Nuevo" action="#{ticketController.irNuevoTicket()}" style="margin-left: 5px;" />
 				   		
 				    	<p:commandButton id="btnRegresar" value="Regresar" action="#{administradorBancoForm.irInicio()}" style="margin-left: 5px;" />
 				    </div>
-				     -->	
 		    	</p:panel>
 		    </h:form>
 		    <!-- 

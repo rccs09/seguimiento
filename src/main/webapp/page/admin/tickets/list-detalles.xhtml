@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+      
+	<ui:composition template="/page/templates/template.xhtml">
+		<ui:define name="body">
+			<h:form id="frmLista" enctype="multipart/form-data" acceptcharset="UTF-8">
+		    	<p:panel id="pnlTabla" header="Detalles del ticket"  >
+		    		 <p:dataTable id="dtResultado" var="item" value="#{ticketController.listTicketDetail}"
+		    		 		rows="10" paginator="true"
+		                         paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		                         rowsPerPageTemplate="5,10,15">
+		                         
+				        <p:column headerText="Estatus">
+				            <h:outputText value="#{item.dtkStatusSt}" />
+				        </p:column>
+				        
+				        <p:column headerText="Responsable">
+				            <h:outputText value="#{item.dtkRpsName} #{item.dtkRpsLastName}" />
+				        </p:column>
+				        
+				        <p:column headerText="Componente">
+				            <h:outputText value="#{item.dtkCmpName}" />
+				        </p:column>
+
+				        <p:column headerText="Opción" style="width:16%;text-align: center">
+				        	<p:commandLink value="Editar" action="#{ticketController.editStatus(item)}" ajax="false" style="margin-left: 5px;"/>
+				        	<p:commandLink value="Detalles" action="#{ticketController.editStatus(item)}" ajax="false" style="margin-left: 5px;"/>
+							<!-- 	
+				        	<p:commandLink value="Ver" action="#{administradorBancoForm.irVer(item)}" style="margin-left: 5px;"/>
+				        	
+				        	<p:commandLink value="Eliminar" action="#{administradorBancoForm.irModalEliminar(item)}" style="margin-left: 5px;">
+				        		<p:ajax oncomplete="PF('dialogoEliminarBanco').show();" update=":frmModalBancoEliminar"/>
+				        	</p:commandLink>
+				        	 -->
+				        </p:column>
+				         
+				        
+				    </p:dataTable>
+
+				    <div style="margin-top: 10px; margin-bottom: 10px;">
+				   		<p:commandButton id="btnCrear" value="Crear Nuevo" action="#{ticketController.returnList()}" style="margin-left: 5px;" />
+				    	<p:commandButton id="btnRegresar" value="Regresar" action="#{ticketController.returnList()}" style="margin-left: 5px;" />
+				    </div>
+
+		    	</p:panel>
+		    </h:form>
+		    <!-- 
+		    <ui:include src="/paginas/administracion/crudEntidades/banco/modalEliminar.xhtml" />
+		     -->
+		</ui:define>
+		
+	</ui:composition>
+</html>

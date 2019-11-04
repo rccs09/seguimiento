@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+      
+<ui:composition template="/page/templates/template.xhtml">
+<ui:define name="body">
+	<h:form id="frmVer">
+		<p:panel id="pnlEdit" header="Información del ticket" position="center"  style="margin-bottom:20px">
+			<!-- ******************** TABLA RESPONSIVA ************************ -->
+			<div class="grid condensed">
+				<!-- ******************** FILA NUMERO 1 ************************ -->
+				<ui:decorate template="/page/templates/generalEdit.xhtml">
+					<ui:define name="label">
+						<p:outputLabel id="lblCode" for="txtCode" value="Codigo: "/>
+					</ui:define>
+					<ui:define name="value">
+						<p:inputText id="txtCode" value="#{ticketController.ticketEdit.ticket.tckCode}"
+							required="true" maxlength="20" requiredMessage="#{constantesController.msgCampoRequerido}" style="width:100%">
+							<p:ajax event="blur" update="lblCode , msgCode , txtCode"/>
+						</p:inputText>	
+					</ui:define>
+					<ui:define name="msgError">
+						<p:message id="msgCode" for="txtCode"/>
+					</ui:define>
+				</ui:decorate>
+				
+				<ui:decorate template="/page/templates/generalEdit.xhtml">
+					<ui:define name="label">
+						<p:outputLabel id="lblUrl" for="txtUrl" value="Url"/>
+					</ui:define>
+					<ui:define name="value">
+						<p:inputText id="txtUrl" value="#{ticketController.ticketEdit.ticket.tckUrl}" 
+							required="true" requiredMessage="#{constantesController.msgCampoRequerido}" style="width:100%">
+							<p:ajax event="blur" update="lblUrl , msgUrl , txtUrl"/>
+						</p:inputText>
+					</ui:define>
+					<ui:define name="msgError">
+						<p:message id="msgUrl" for="txtUrl"/>
+					</ui:define>
+				</ui:decorate>
+				
+				<ui:decorate template="/page/templates/generalEdit.xhtml">
+					<ui:define name="label">
+						<p:outputLabel id="lblType" for="slcType" value="Tipo"/>
+					</ui:define>
+					<ui:define name="value">
+						<h:selectOneMenu id="slcType" value="#{ticketController.ticketEdit.ticket.tckType}"
+							required="true" requiredMessage="#{constantesController.msgCampoRequerido}" style="width:100%">
+							<f:selectItem itemLabel="#{constantesController.formSeleccione}" />
+							<f:selectItems var="item"  value="#{listController.listaComboTckType}"
+								itemLabel="#{item.label}" itemValue="#{item.value}" />
+							<p:ajax event="change" update=" lblType, slcType, msgType" />
+						</h:selectOneMenu>
+					</ui:define>
+					<ui:define name="msgError">
+						<p:message id="msgType" for="slcType"/>
+					</ui:define>
+				</ui:decorate>
+				
+				<ui:decorate template="/page/templates/generalEdit.xhtml">
+					<ui:define name="label">
+						<p:outputLabel id="lblStatus" for="slcStatus" value="Estatus"/>
+					</ui:define>
+					<ui:define name="value">
+						<h:selectOneMenu id="slcStatus" value="#{ticketController.ticketEdit.ticket.tckStatus}"
+							required="true" requiredMessage="#{constantesController.msgCampoRequerido}" style="width:100%">
+							<f:selectItem itemLabel="#{constantesController.formSeleccione}" />
+							<f:selectItems var="item"  value="#{listController.listaComboTckStatus}"
+								itemLabel="#{item.label}" itemValue="#{item.value}" />
+							<p:ajax event="change" update=" lblStatus, slcStatus, msgStatus" />
+						</h:selectOneMenu>
+					</ui:define>
+					<ui:define name="msgError">
+						<p:message id="msgStatus" for="slcStatus"/>
+					</ui:define>
+				</ui:decorate>
+				
+				<ui:decorate template="/page/templates/generalEdit.xhtml">
+					<ui:define name="label">
+						<p:outputLabel id="lblFlow" for="slcFlow" value="Flujo"/>
+					</ui:define>
+					<ui:define name="value">
+						<h:selectOneMenu id="slcFlow" value="#{ticketController.ticketEdit.ticket.tckFlow}"
+							required="true"  requiredMessage="#{constantesController.msgCampoRequerido}" style="width:100%">
+							<f:selectItem itemLabel="#{constantesController.formSeleccione}" />
+							<f:selectItems var="item"  value="#{listController.listaComboTckFlow}"
+								itemLabel="#{item.label}" itemValue="#{item.value}" />
+							<p:ajax event="change" update=" lblFlow, slcFlow, msgFlow" />
+						</h:selectOneMenu>
+					</ui:define>
+					<ui:define name="msgError">
+						<p:message id="msgFlow" for="slcFlow"/>
+					</ui:define>
+				</ui:decorate>
+				
+				<ui:decorate template="/page/templates/generalEdit.xhtml">
+					<ui:define name="label">
+						<p:outputLabel id="lblEstimate" for="txtEstimate" value="Estimado: "/>
+					</ui:define>
+					<ui:define name="value">
+						<p:inputText id="txtEstimate" value="#{ticketController.ticketEdit.ticket.tckStimated}"
+							required="true" requiredMessage="#{constantesController.msgCampoRequerido}" style="width:100%">
+							<p:ajax event="blur" update="lblEstimate , msgStimated , txtEstimate"/>
+						</p:inputText>	
+					</ui:define>
+					<ui:define name="msgError">
+						<p:message id="msgStimated" for="txtEstimate"/>
+					</ui:define>
+				</ui:decorate>
+				
+				<ui:decorate template="/page/templates/generalEdit.xhtml">
+					<ui:define name="label">
+						<p:outputLabel id="lblFpln" for="txtFpln" value="Fecha plan entrega: "/>
+					</ui:define>
+					<ui:define name="value">
+						<p:calendar id="txtFpln" value="#{ticketController.ticketEdit.tckDateEndPlanDt}"
+							 locale="es" pattern="dd-MM-yyyy" 
+							required="true" requiredMessage="#{constantesController.msgCampoRequerido}" >
+							<p:ajax event="blur" update=" lblFpln , msgFpln ,  txtFpln" />
+						</p:calendar>	
+					</ui:define>
+					<ui:define name="msgError">
+						<p:message id="msgFpln" for="txtFpln"/>
+					</ui:define>
+				</ui:decorate>
+				
+				<ui:decorate template="/page/templates/generalEdit.xhtml">
+					<ui:define name="label">
+						<p:outputLabel id="lblFini" for="txtFini" value="Fecha inicio: "/>
+					</ui:define>
+					<ui:define name="value">
+						<p:calendar id="txtFini" value="#{ticketController.ticketEdit.tckDateIniDt}"
+							  locale="es" pattern="dd-MM-yyyy" 
+							required="true" requiredMessage="#{constantesController.msgCampoRequerido}" >
+							<p:ajax event="blur" update=" lblFini , msgFini ,  txtFini" />
+						</p:calendar>	
+					</ui:define>
+					<ui:define name="msgError">
+						<p:message id="msgFini" for="txtFini"/>
+					</ui:define>
+				</ui:decorate>
+				
+				<ui:decorate template="/page/templates/generalEdit.xhtml">
+					<ui:define name="label">
+						<p:outputLabel id="lblFfin" for="txtFfin" value="Fecha entrega "/>
+					</ui:define>
+					<ui:define name="value">
+						<p:calendar id="txtFfin" value="#{ticketController.ticketEdit.tckDateEndDt}"
+							locale="es" pattern="dd-MM-yyyy" 
+							required="true" requiredMessage="#{constantesController.msgCampoRequerido}" >
+							<p:ajax event="blur" update=" lblFfin , msgFfin ,  txtFfin" />
+						</p:calendar>	
+					</ui:define>
+					<ui:define name="msgError">
+						<p:message id="msgFfin" for="txtFfin"/>
+					</ui:define>
+				</ui:decorate>
+				
+				<ui:decorate template="/page/templates/generalEdit.xhtml">
+					<ui:define name="label">
+						<p:outputLabel id="lblSol" for="slcSol" value="Solucion"/>
+					</ui:define>
+					<ui:define name="value">
+						<h:selectOneMenu id="slcSol" value="#{ticketController.ticketEdit.ticket.solId}"
+							required="true" requiredMessage="#{constantesController.msgCampoRequerido}" style="width:100%">
+							<f:selectItem itemLabel="#{constantesController.formSeleccione}" />
+							<f:selectItems var="item"  value="#{ticketController.listSolution}"
+								itemLabel="#{item.solName}" itemValue="#{item.solId}" />
+							<p:ajax event="change" update=" lblSol , slcSol , msgSol" />
+						</h:selectOneMenu>
+					</ui:define>
+					<ui:define name="msgError">
+						<p:message id="msgSol" for="slcSol"/>
+					</ui:define>
+				</ui:decorate>
+				
+				
+			</div>
+			
+			
+		
+		</p:panel>
+		<div style="margin-top: 10px; margin-bottom: 10px;">
+		
+			<p:commandButton id="btnCancelarNuevo" value="Cancelar" action="#{ticketController.cancelEditTicket()}" 
+				immediate="true" ajax="false" style="margin-left: 5px;"/>
+			
+			<p:commandButton id="btnGuardar" value="Guardar" action="#{ticketController.saveTicket()}" 
+				ajax="false" rendered="#{ticketController.tckFlagNew==0}"	/>
+			
+			<p:commandButton id="btnEditar" value="Guardar cambios" action="#{ticketController.updateTicket()}" 
+				ajax="false" rendered="#{ticketController.tckFlagNew==1}"/>
+		<!-- 
+			
+				 
+			<p:commandButton id="btnCancelarNuevo" value="Cancelar" action="#{administradorBancoForm.cancelarNuevo}" 
+				 immediate="true" ajax="false" style="margin-left: 5px;"/>
+				 
+		 -->		 	 
+		</div>
+	</h:form>		
+</ui:define>
+</ui:composition>
+</html>
