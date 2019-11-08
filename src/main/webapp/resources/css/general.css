@@ -1,6 +1,7 @@
 /********************************************************************/
 /*********************** EDICIONES PRIME ****************************/
 /********************************************************************/
+
 .dmm{
 	margin: 0px;
 	font-family: "Open Sans";
@@ -44,6 +45,31 @@
 	max-width:100%;
 }
 
+.ui-icon-myEdit{
+	background-image: url('../img/ico/edit.png')!important;
+	height: 16px;
+	width: 16px;
+}
+
+//for ui-icon-triangle-1-s icons of selectOneMenu and selectCheckboxMenu
+
+// default css in Sentinel Theme
+.ui-selectonemenu-trigger .ui-icon-triangle-1-s, 
+.ui-selectcheckboxmenu-trigger .ui-icon-triangle-1-s {
+    background-image: url("/sentinel/javax.faces.resource/images/downarrow.svg.xhtml?ln=primefaces-sentinel") !important;
+    background-position: center center;
+    background-size: 100% auto;
+    margin-top: 8px !important;
+}
+
+// changes for png icon
+.ui-selectonemenu-trigger .ui-icon-triangle-1-s, 
+.ui-selectcheckboxmenu-trigger .ui-icon-triangle-1-s {
+    background-image: url("/sentinel/javax.faces.resource/images/ui-icons_72b42d_256x240.png.xhtml?ln=primefaces-sentinel")!important;
+    background-position: -64px -16px;
+    background-size: auto;
+    margin-top: 8px !important;
+}
 
 
 /********************************************************************/

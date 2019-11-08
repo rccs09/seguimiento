@@ -1,0 +1,29 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      			xmlns:ui="http://java.sun.com/jsf/facelets"
+      			xmlns:f="http://java.sun.com/jsf/core"
+      			xmlns:h="http://java.sun.com/jsf/html"
+     			xmlns:p="http://primefaces.org/ui">
+	<h:form id="frmModalDeleteTicket">
+		<p:dialog widgetVar="diagModalDeleteTicket" modal="true" draggable="false" closable="false" 
+				  resizable="false" height="100" width="350" header="Eliminar ticket">
+			<table>
+				<tr>
+					<td>
+						<p:outputLabel value="¿Seguro que quiere eliminar el ticket?" />
+					</td>
+				</tr>
+				<tr>
+					<td align="center" colspan="2">
+						<h:panelGroup>
+							<p:commandButton value="Si" action="#{ticketController.deleteTicket()}" 
+		    							oncomplete="PF('diagModalDeleteTicket').hide();" update="frmModalDeleteTicket" ajax="false" />
+		        			<p:commandButton value="No" oncomplete="PF('diagModalDeleteTicket').hide();"  style="margin-left: 5px;"/>
+						</h:panelGroup>
+					</td>
+				</tr>
+			</table>
+		</p:dialog> 
+	</h:form>
+</ui:composition>

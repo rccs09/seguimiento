@@ -184,22 +184,14 @@
 		
 		</p:panel>
 		<div style="margin-top: 10px; margin-bottom: 10px;">
-		
-			<p:commandButton id="btnCancelarNuevo" value="Cancelar" action="#{ticketController.cancelEditTicket()}" 
-				immediate="true" ajax="false" style="margin-left: 5px;"/>
-			
 			<p:commandButton id="btnGuardar" value="Guardar" action="#{ticketController.saveTicket()}" 
 				ajax="false" rendered="#{ticketController.tckFlagNew==0}"	/>
 			
 			<p:commandButton id="btnEditar" value="Guardar cambios" action="#{ticketController.updateTicket()}" 
 				ajax="false" rendered="#{ticketController.tckFlagNew==1}"/>
-		<!-- 
-			
-				 
-			<p:commandButton id="btnCancelarNuevo" value="Cancelar" action="#{administradorBancoForm.cancelarNuevo}" 
-				 immediate="true" ajax="false" style="margin-left: 5px;"/>
-				 
-		 -->		 	 
+				
+			<p:commandButton id="btnCancelarNuevo" value="Cancelar" action="#{ticketController.cancelEditTicket()}" 
+				immediate="true" ajax="false" style="margin-left: 5px;"/>	
 		</div>
 	</h:form>		
 </ui:define>

@@ -17,8 +17,7 @@ public class TicketServiceImpl implements TicketService{
 	
 	@Override
 	public List<TicketDto> findByCode(String code) {
-		List<Ticket> listaEntity = ticketDao.findByCode(code);
-		return TicketDto.listEntityToDto(listaEntity);
+		return ticketDao.findDtoByCode(code);
 	}
 	
 	@Override

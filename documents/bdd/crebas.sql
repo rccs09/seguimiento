@@ -1,9 +1,8 @@
 /*==============================================================*/
 /* DBMS name:      PostgreSQL 8                                 */
-/* Created on:     11/2/2019 10:02:27 PM                        */
+/* Created on:     11/7/2019 7:57:14 PM                         */
 /*==============================================================*/
-
-dependeindo de como instalamos postgres podemos usar:
+-- dependeindo de como instalamos postgres podemos usar:
 
 CREATE DATABASE "tracingdb"  WITH OWNER = postgres  
 		ENCODING = 'UTF8'
@@ -12,7 +11,7 @@ CREATE DATABASE "tracingdb"  WITH OWNER = postgres
 		LC_CTYPE = 'Spanish_Spain.1252'
 		CONNECTION LIMIT = -1;
 
-o esto --->
+-- o esto --->
 
 CREATE DATABASE "tracingdb"  WITH OWNER = postgres  
 		ENCODING = 'UTF8'
@@ -21,9 +20,14 @@ CREATE DATABASE "tracingdb"  WITH OWNER = postgres
 		LC_CTYPE = 'English_United States.1252'
 		CONNECTION LIMIT = -1;
 
+
 drop table CLIENT;
 
 drop table COMPONENT;
+
+drop table DETAIL_PROD;
+
+drop table DETAIL_QA;
 
 drop table PROVIDER;
 
@@ -56,6 +60,26 @@ create table COMPONENT (
    CMP_NAME             VARCHAR(20)          null,
    SOL_ID               INT4                 null,
    constraint PK_COMPONENT primary key (CMP_ID)
+);
+
+/*==============================================================*/
+/* Table: DETAIL_PROD                                           */
+/*==============================================================*/
+create table DETAIL_PROD (
+   DPROD_ID             SERIAL               not null,
+   DTK_ID               INT4                 null,
+   TPD_ID               INT4                 null,
+   constraint PK_DETAIL_PROD primary key (DPROD_ID)
+);
+
+/*==============================================================*/
+/* Table: DETAIL_QA                                             */
+/*==============================================================*/
+create table DETAIL_QA (
+   DQA_ID               SERIAL               not null,
+   DTK_ID               INT4                 null,
+   TQA_ID               INT4                 null,
+   constraint PK_DETAIL_QA primary key (DQA_ID)
 );
 
 /*==============================================================*/
@@ -132,7 +156,6 @@ create table TICKET_PROD (
    TPD_VERSION          VARCHAR(10)          null,
    TPD_STATUS           INT4                 null,
    TPD_COMMENT          VARCHAR(200)         null,
-   DTK_ID               INT4                 null,
    constraint PK_TICKET_PROD primary key (TPD_ID)
 );
 
@@ -147,13 +170,32 @@ create table TICKET_QA (
    TQA_VERSION          VARCHAR(10)          null,
    TQA_STATUS           INT4                 null,
    TQA_COMMENT          VARCHAR(200)         null,
-   DTK_ID               INT4                 null,
    constraint PK_TICKET_QA primary key (TQA_ID)
 );
 
 alter table COMPONENT
    add constraint FK_COMPONEN_RELATIONS_SOLUTION foreign key (SOL_ID)
       references SOLUTION (SOL_ID)
+      on delete restrict on update restrict;
+
+alter table DETAIL_PROD
+   add constraint FK_DETAIL_P_RELATIONS_TICKET_D foreign key (DTK_ID)
+      references TICKET_DETAIL (DTK_ID)
+      on delete restrict on update restrict;
+
+alter table DETAIL_PROD
+   add constraint FK_DETAIL_P_RELATIONS_TICKET_P foreign key (TPD_ID)
+      references TICKET_PROD (TPD_ID)
+      on delete restrict on update restrict;
+
+alter table DETAIL_QA
+   add constraint FK_DETAIL_Q_RELATIONS_TICKET_D foreign key (DTK_ID)
+      references TICKET_DETAIL (DTK_ID)
+      on delete restrict on update restrict;
+
+alter table DETAIL_QA
+   add constraint FK_DETAIL_Q_RELATIONS_TICKET_Q foreign key (TQA_ID)
+      references TICKET_QA (TQA_ID)
       on delete restrict on update restrict;
 
 alter table RESPONSIBLE
@@ -186,15 +228,6 @@ alter table TICKET_DETAIL
       references COMPONENT (CMP_ID)
       on delete restrict on update restrict;
 
-alter table TICKET_PROD
-   add constraint FK_TICKET_P_RELATIONS_TICKET_D foreign key (DTK_ID)
-      references TICKET_DETAIL (DTK_ID)
-      on delete restrict on update restrict;
-
-alter table TICKET_QA
-   add constraint FK_TICKET_Q_RELATIONS_TICKET_D foreign key (DTK_ID)
-      references TICKET_DETAIL (DTK_ID)
-      on delete restrict on update restrict;
 
 /* INSERTS */
 INSERT INTO provider(prv_id,prv_name) VALUES (1,'Todo1');
@@ -242,7 +275,4 @@ SELECT setval('solution_sol_id_seq', 13);
 SELECT setval('component_cmp_id_seq', 4);
 SELECT setval('ticket_tck_id_seq', 1);
 SELECT setval('ticket_detail_dtk_id_seq', 2);
-
-
-
 

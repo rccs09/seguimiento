@@ -7,16 +7,16 @@
       
 	<ui:composition template="/page/templates/template.xhtml">
 		<ui:define name="body">
-			<h:form id="frmLista" enctype="multipart/form-data" acceptcharset="UTF-8">
+			<h:form id="frmTicketList" enctype="multipart/form-data" acceptcharset="UTF-8">
 				<p:panel id="pnlSearch" header="Búsqueda de Ticket" >
 					<h:panelGrid columns="2">
 						<h:outputLabel for="fndCode" value="Codigo:" style="font-weight:bold" />
 						<p:inputText id="fndCode" value="#{ticketController.ticketFound.ticket.tckCode}"/>
 					
 						<p:commandButton id="btnBuscar" value="Buscar"  action="#{ticketController.findByCode()}"
-								update=":frmLista:pnlResultados"/> 
+								update=":frmTicketList:pnlResultados"/> 
 						<p:commandButton id="btnLimpiar" value="Limpiar" action="#{ticketController.findReset()}"  
-							update=":frmLista:pnlResultados , :frmLista:pnlSearch"/>		
+							update=":frmTicketList:pnlResultados , :frmTicketList:pnlSearch"/>		
 					</h:panelGrid>
 		    	</p:panel>
 		    	
@@ -44,13 +44,30 @@
 				        
 				        <p:column headerText="Flujo">
 				            <h:outputText value="#{item.tckFlowSt}"  />
-				        </p:column>
-
+ 						</p:column>
+						
 				        <p:column headerText="Opción" style="width:16%;text-align: center">
-				        	<p:commandButton id="btnEdit" value="Editar" action="#{ticketController.irEditarTicket(item)}" style="margin-left: 5px;" />
-				        	<p:commandButton id="btnDet" value="Detalles" action="#{ticketController.verDetalle(item)}" style="margin-left: 5px;" />
+				        	<p:commandButton id="btnEdit" icon="ui-icon ui-icon-pencil" action="#{ticketController.goEditTicket(item)}" style="margin-left: 2px;" />
+				        	<p:tooltip id="ttEdit" for="btnEdit" value="Editar ticket"/>
+				        	
+				        	<p:commandButton id="btnView" icon="ui-icon ui-icon-clipboard" action="#{ticketController.goViewTicket(item)}" style="margin-left: 2px;"/>
+				        	<p:tooltip id="ttView" for="btnView" value="Ver ticket"/>
+				        	
+				        	<p:commandButton id="btnDet" icon="ui-icon ui-icon-newwin" action="#{ticketController.viewTicketDetail(item)}" style="margin-left: 2px;" />
+				        	<p:tooltip id="ttDet" for="btnDet" value="Ver detalles"/>
+				        	
+				        	<p:commandButton id="btnDel" icon="ui-icon ui-icon-trash" onsuccess="#{ticketController.confDeleteTicket(item)}" style="margin-left: 2px;">
+    							<p:ajax oncomplete="PF('diagModalDeleteTicket').show();" update=":frmTicketList" />
+    						</p:commandButton>
+    						<p:tooltip id="ttDel" for="btnDel" value="Eliminar ticket"/>
+				        	
 				        	
 							<!-- 	
+							
+							<p:commandButton id="btnDel" value="Eliminar" action="#{ticketController.viewTicketDetail(item)}" style="margin-left: 5px;" >
+				        		<p:ajax oncomplete="PF('dialogoEliminarBanco').show();" update=":frmModalBancoEliminar"/>
+				        	</p:commandButton>
+				        	
 				        	<p:commandLink value="Ver" action="#{administradorBancoForm.irVer(item)}" style="margin-left: 5px;"/>
 				        	
 				        	<p:commandLink value="Eliminar" action="#{administradorBancoForm.irModalEliminar(item)}" style="margin-left: 5px;">
@@ -64,12 +81,14 @@
 				    </p:dataTable>
 				    
 				    <div style="margin-top: 10px; margin-bottom: 10px;">
-				   		<p:commandButton id="btnCrear" value="Crear Nuevo" action="#{ticketController.irNuevoTicket()}" style="margin-left: 5px;" />
+				   		<p:commandButton id="btnCrear" value="Crear Nuevo" action="#{ticketController.goNewTicket()}" style="margin-left: 5px;" />
 				   		
 				    	<p:commandButton id="btnRegresar" value="Regresar" action="#{administradorBancoForm.irInicio()}" style="margin-left: 5px;" />
 				    </div>
 		    	</p:panel>
 		    </h:form>
+		    
+		    <ui:include src="/page/admin/tickets/modalDeleteTicket.xhtml" />	
 		    <!-- 
 		    <ui:include src="/paginas/administracion/crudEntidades/banco/modalEliminar.xhtml" />
 		     -->

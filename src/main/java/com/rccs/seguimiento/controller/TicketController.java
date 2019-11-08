@@ -39,6 +39,15 @@ public class TicketController {
 	private List<Solution> listSolution;
 	private Integer tckFlagNew;
 	
+	//********************************************************
+	// pantalla de lista de tickets de incidentes
+	//********************************************************
+	public String initListTicket() {
+		listFndTicket = null;
+		ticketFound = null;
+		getListFndTicket();
+		return "ticketList";
+	}
 	
 	public String findByCode(){
 		listFndTicket = null;
@@ -53,40 +62,81 @@ public class TicketController {
 		return null;
 	}
 	
-	public String verDetalle(TicketDto tdto) {
-		ticketEdit = tdto;
-		getListTicketDetail();
-		return "verDetalle";
+	public String goNewTicket() {
+		tckFlagNew = 0;
+		Ticket t = new Ticket();
+		ticketEdit = new TicketDto();
+		ticketEdit.setTicket(t);
+		return "goNewTicket";
 	}
 	
+	public String goEditTicket(TicketDto tdto) {
+		tckFlagNew = 1;
+		ticketEdit = tdto;
+		ticketEdit.setTckDateIniDt(new Date(tdto.getTicket().getTckDateIni().getTime()));
+		ticketEdit.setTckDateEndDt(new Date(tdto.getTicket().getTckDateEnd().getTime()));
+		ticketEdit.setTckDateEndPlanDt(new Date(tdto.getTicket().getTckDateEndPlan().getTime()));
+		return "goNewTicket";
+	}
+	
+	public String goViewTicket(TicketDto tdto) {
+		ticketEdit = tdto;
+		ticketEdit.setTckDateIniDt(new Date(tdto.getTicket().getTckDateIni().getTime()));
+		ticketEdit.setTckDateEndDt(new Date(tdto.getTicket().getTckDateEnd().getTime()));
+		ticketEdit.setTckDateEndPlanDt(new Date(tdto.getTicket().getTckDateEndPlan().getTime()));
+		return "goViewTicket";
+	}
+	
+	public String cancelViewTicket() {
+		listFndTicket = null;
+		ticketFound = null;
+		getListFndTicket();
+		return "returnListTicket";
+	}
+	
+	public String viewTicketDetail(TicketDto tdto) {
+		ticketEdit = tdto;
+		getListTicketDetail();
+		return "viewDetail";
+	}
+	
+	
+	public void confDeleteTicket(TicketDto tdto) {
+		System.out.println("****************************AAAAAAAAAAAAAAAA************");
+		System.out.println(tdto.toString());
+		ticketEdit = tdto;
+//		tckFlagNew = 1;
+//		ticketEdit = tdto;
+//		ticketEdit.setTckDateIniDt(new Date(tdto.getTicket().getTckDateIni().getTime()));
+//		ticketEdit.setTckDateEndDt(new Date(tdto.getTicket().getTckDateEnd().getTime()));
+//		ticketEdit.setTckDateEndPlanDt(new Date(tdto.getTicket().getTckDateEndPlan().getTime()));
+//		return null;
+	}
+	
+	public String deleteTicket() {
+		System.out.println("****************************BBBBBBBBBBBBBBBBBBBBB************");
+		System.out.println(ticketEdit.toString());
+//		tckFlagNew = 1;
+//		ticketEdit = tdto;
+//		ticketEdit.setTckDateIniDt(new Date(tdto.getTicket().getTckDateIni().getTime()));
+//		ticketEdit.setTckDateEndDt(new Date(tdto.getTicket().getTckDateEnd().getTime()));
+//		ticketEdit.setTckDateEndPlanDt(new Date(tdto.getTicket().getTckDateEndPlan().getTime()));
+		return null;
+	}
+	
+	//********************************************************
+	// pantalla de detalles de tickets de insidentes
+	//********************************************************
 	public String returnList() {
 		ticketEdit = null;
 		getListFndTicket();
 		return "returnList";
 	}
 	
-	// Metodos para ticket
-	public String irNuevoTicket() {
-		tckFlagNew = 0;
-		Ticket t = new Ticket();
-//		t.setTckType(-1);
-//		t.setTckStatus(-1);
-//		t.setTckFlow(-1);
-//		t.setSolId(-1);
-		
-		ticketEdit = new TicketDto();
-		ticketEdit.setTicket(t);
-		return "irNuevoTicket";
-	}
 	
-	public String irEditarTicket(TicketDto tdto) {
-		tckFlagNew = 1;
-		ticketEdit = tdto;
-		ticketEdit.setTckDateIniDt(new Date(tdto.getTicket().getTckDateIni().getTime()));
-		ticketEdit.setTckDateEndDt(new Date(tdto.getTicket().getTckDateEnd().getTime()));
-		ticketEdit.setTckDateEndPlanDt(new Date(tdto.getTicket().getTckDateEndPlan().getTime()));
-		return "irNuevoTicket";
-	}
+	
+	
+	
 	
 	public String cancelEditTicket() {
 		ticketEdit = null;

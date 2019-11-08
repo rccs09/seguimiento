@@ -24,6 +24,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.rccs.seguimiento.dao.TicketDao;
+import com.rccs.seguimiento.dto.TicketDto;
 import com.rccs.seguimiento.mapper.TicketMapper;
 import com.rccs.seguimiento.model.Ticket;
 
@@ -45,8 +46,9 @@ public class TicketDaoImpl extends JdbcDaoSupport implements TicketDao{
 	@Override
 	public List<Ticket> findByCode(String code) {
 		logger.info("Consulta de ticket por codigo: " + code);
-		String sql = "SELECT * FROM TICKET WHERE tck_code like ?";
-		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql, "%"+code+"%");
+		String sql = "SELECT * FROM TICKET WHERE UPPER(tck_code) like ?";
+		
+		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql, "%"+code.toUpperCase()+"%");
 		List<Ticket> result = new ArrayList<>();
 		logger.info("Numero de registros: " + rows.size());
 		for (Map<String, Object> row : rows) {
@@ -65,6 +67,41 @@ public class TicketDaoImpl extends JdbcDaoSupport implements TicketDao{
 			result.add(t);
 		}
 		return result;
+	}
+	
+	@Override
+	public List<TicketDto> findDtoByCode(String code) {
+		logger.info("Consulta de ticket por codigo: " + code);
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT t.tck_id, t.tck_code, t.tck_url, t.tck_type, t.tck_status, t.tck_flow, t.tck_estimated, ");
+		sql.append("t.tck_date_ini, t.tck_date_end, t.tck_date_end_plan, t.sol_id, s.sol_name ");
+		sql.append("FROM TICKET t, SOLUTION s WHERE t.sol_id = s.sol_id ");
+		sql.append("AND UPPER(tck_code) like ?");
+		
+		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql.toString(), "%"+code.toUpperCase()+"%");
+		List<TicketDto> list = new ArrayList<TicketDto>();
+		logger.info("Numero de registros: " + rows.size());
+		for (Map<String, Object> row : rows) {
+			Ticket t = new Ticket();
+			t.setTckId((Integer)row.get("tck_id"));
+			t.setTckCode((String)row.get("tck_code"));
+			t.setTckUrl((String)row.get("tck_url"));
+			t.setTckType((Integer)row.get("tck_type"));
+			t.setTckStatus((Integer)row.get("tck_status"));
+			t.setTckFlow((Integer)row.get("tck_flow"));
+			t.setTckStimated((BigDecimal)row.get("tck_estimated"));
+			t.setTckDateIni( new Timestamp(((Date)row.get("tck_date_ini")).getTime()));
+			t.setTckDateEnd( new Timestamp(((Date)row.get("tck_date_end")).getTime()));
+			t.setTckDateEndPlan( new Timestamp(((Date)row.get("tck_date_end_plan")).getTime()));
+			t.setSolId((Integer)row.get("sol_id"));
+			
+			TicketDto tdto = TicketDto.entityToDto(t);
+			tdto.setTckSolucion((String)row.get("sol_name"));
+			
+			list.add(tdto);
+		}
+		
+		return list;
 	}
 	
 	@Override

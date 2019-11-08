@@ -18,12 +18,13 @@ public class TicketDto implements Serializable{
 	private Date tckDateIniDt;
 	private Date tckDateEndDt;
 	private Date tckDateEndPlanDt;
+	private String tckSolucion;
 	
 	public TicketDto() {
 	}
 
 	public TicketDto(Ticket ticket, String tckTypeSt, String tckStatusSt, String tckFlowSt, Date tckDateIniDt,
-			Date tckDateEndDt, Date tckDateEndPlanDt) {
+			Date tckDateEndDt, Date tckDateEndPlanDt, String tckSolucion) {
 		this.ticket = ticket;
 		this.tckTypeSt = tckTypeSt;
 		this.tckStatusSt = tckStatusSt;
@@ -31,6 +32,7 @@ public class TicketDto implements Serializable{
 		this.tckDateIniDt = tckDateIniDt;
 		this.tckDateEndDt = tckDateEndDt;
 		this.tckDateEndPlanDt = tckDateEndPlanDt;
+		this.tckSolucion = tckSolucion;
 	}
 
 	public Ticket getTicket() {
@@ -89,6 +91,14 @@ public class TicketDto implements Serializable{
 		this.tckDateEndPlanDt = tckDateEndPlanDt;
 	}
 
+	public String getTckSolucion() {
+		return tckSolucion;
+	}
+
+	public void setTckSolucion(String tckSolucion) {
+		this.tckSolucion = tckSolucion;
+	}
+
 	public static TicketDto entityToDto(Ticket entity) {
 		TicketDto ticketDto = new TicketDto();
 		ticketDto.setTicket(entity);
@@ -108,8 +118,8 @@ public class TicketDto implements Serializable{
 	
 	@Override
 	public String toString() {
-		return String.format("TicketDto [ticket=%s, tckTypeSt=%s, tckStatusSt=%s, tckFlowSt=%s"
-				, ticket.toString(), tckTypeSt, tckStatusSt, tckFlowSt);
+		return String.format("TicketDto [ticket=%s, tckTypeSt=%s, tckStatusSt=%s, tckFlowSt=%s, tckSolucion=%s\""
+				, ticket.toString(), tckTypeSt, tckStatusSt, tckFlowSt, tckSolucion);
 	}
 
 }
