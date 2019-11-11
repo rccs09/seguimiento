@@ -7,7 +7,9 @@
       
 	<ui:composition template="/page/templates/template.xhtml">
 		<ui:define name="body">
-			<h:form id="frmTicketList" enctype="multipart/form-data" acceptcharset="UTF-8">
+			<script src="/resources/scripts/scriptsJS.js" type="text/javascript"></script> 
+			<h:form id="frmTicketList" enctype="multipart/form-data" acceptcharset="UTF-8" >
+				<p:messages autoUpdate="true" globalOnly="true" />
 				<p:panel id="pnlSearch" header="Búsqueda de Ticket" >
 					<h:panelGrid columns="2">
 						<h:outputLabel for="fndCode" value="Codigo:" style="font-weight:bold" />
@@ -53,45 +55,24 @@
 				        	<p:commandButton id="btnView" icon="ui-icon ui-icon-clipboard" action="#{ticketController.goViewTicket(item)}" style="margin-left: 2px;"/>
 				        	<p:tooltip id="ttView" for="btnView" value="Ver ticket"/>
 				        	
-				        	<p:commandButton id="btnDet" icon="ui-icon ui-icon-newwin" action="#{ticketController.viewTicketDetail(item)}" style="margin-left: 2px;" />
+				        	<p:commandButton id="btnDet" icon="ui-icon ui-icon-newwin" action="#{ticketController.viewTicketDetail(item)}" update=":frmTicketList"  style="margin-left: 2px;" />
 				        	<p:tooltip id="ttDet" for="btnDet" value="Ver detalles"/>
 				        	
-				        	<p:commandButton id="btnDel" icon="ui-icon ui-icon-trash" onsuccess="#{ticketController.confDeleteTicket(item)}" style="margin-left: 2px;">
-    							<p:ajax oncomplete="PF('diagModalDeleteTicket').show();" update=":frmTicketList" />
-    						</p:commandButton>
-    						<p:tooltip id="ttDel" for="btnDel" value="Eliminar ticket"/>
-				        	
-				        	
-							<!-- 	
-							
-							<p:commandButton id="btnDel" value="Eliminar" action="#{ticketController.viewTicketDetail(item)}" style="margin-left: 5px;" >
-				        		<p:ajax oncomplete="PF('dialogoEliminarBanco').show();" update=":frmModalBancoEliminar"/>
+				        	<p:commandButton id="btnDel" icon="ui-icon ui-icon-trash" action="#{ticketController.confDeleteTicket(item)}" style="margin-left: 2px;" >
+				        		<p:ajax oncomplete="PF('diagModalDeleteTicket').show();" update=":frmTicketList" />			
+				        					
 				        	</p:commandButton>
-				        	
-				        	<p:commandLink value="Ver" action="#{administradorBancoForm.irVer(item)}" style="margin-left: 5px;"/>
-				        	
-				        	<p:commandLink value="Eliminar" action="#{administradorBancoForm.irModalEliminar(item)}" style="margin-left: 5px;">
-				        		<p:ajax oncomplete="PF('dialogoEliminarBanco').show();" update=":frmModalBancoEliminar"/>
-				        	</p:commandLink>
-				        	
-				        	 -->
+				        	<p:tooltip id="ttDel" for="btnDel" value="Eliminar ticket"/>
 				        </p:column>
-				         
-				        
 				    </p:dataTable>
 				    
 				    <div style="margin-top: 10px; margin-bottom: 10px;">
 				   		<p:commandButton id="btnCrear" value="Crear Nuevo" action="#{ticketController.goNewTicket()}" style="margin-left: 5px;" />
-				   		
-				    	<p:commandButton id="btnRegresar" value="Regresar" action="#{administradorBancoForm.irInicio()}" style="margin-left: 5px;" />
 				    </div>
 		    	</p:panel>
 		    </h:form>
 		    
-		    <ui:include src="/page/admin/tickets/modalDeleteTicket.xhtml" />	
-		    <!-- 
-		    <ui:include src="/paginas/administracion/crudEntidades/banco/modalEliminar.xhtml" />
-		     -->
+		    <ui:include src="/page/admin/tickets/modalDeleteTicket.xhtml" />
 		</ui:define>
 		
 	</ui:composition>

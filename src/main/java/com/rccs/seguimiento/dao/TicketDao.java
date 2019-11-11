@@ -14,4 +14,6 @@ public interface TicketDao {
 	
 	long update(Ticket t);
 	
+	long delete(Ticket t);
+	
 }

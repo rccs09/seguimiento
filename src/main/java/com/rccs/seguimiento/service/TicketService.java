@@ -11,4 +11,6 @@ public interface TicketService {
 	long save(Ticket t);
 	
 	long update(Ticket t);
+	
+	long delete(Ticket t);
 }

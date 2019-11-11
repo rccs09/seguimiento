@@ -41,5 +41,13 @@ public class ListController {
 		}
 		return retorno;
 	}
+	
+	public List<SelectItem> getListaComboDetckStatus()	{
+		List<SelectItem> retorno = new ArrayList<SelectItem>();
+		for (Map.Entry<Integer, String> entry : Constants.DTCK_STATUS.entrySet()) {
+			retorno.add(new SelectItem(entry.getKey(),entry.getValue()));
+		}
+		return retorno;
+	}
 
 }

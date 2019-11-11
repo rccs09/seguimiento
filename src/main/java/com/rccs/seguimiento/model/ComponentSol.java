@@ -2,17 +2,17 @@ package com.rccs.seguimiento.model;
 
 import java.io.Serializable;
 
-public class Component implements Serializable{
+public class ComponentSol implements Serializable{
 	private static final long serialVersionUID = -2547494848500089788L;
 	
 	private int cmpId;
 	private String cmpName;
 	private int solId;
 
-	public Component() {
+	public ComponentSol() {
 	}
 
-	public Component(int cmpId, String cmpName, int solId) {
+	public ComponentSol(int cmpId, String cmpName, int solId) {
 		this.cmpId = cmpId;
 		this.cmpName = cmpName;
 		this.solId = solId;

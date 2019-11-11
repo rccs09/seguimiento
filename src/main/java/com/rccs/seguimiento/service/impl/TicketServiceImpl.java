@@ -29,4 +29,9 @@ public class TicketServiceImpl implements TicketService{
 	public long update(Ticket t) {
 		return ticketDao.update(t);
 	}
+	
+	@Override
+	public long delete(Ticket t) {
+		return ticketDao.delete(t);
+	}
 }

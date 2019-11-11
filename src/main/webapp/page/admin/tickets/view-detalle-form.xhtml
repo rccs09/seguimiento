@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+      
+<ui:composition template="/page/templates/template.xhtml">
+<ui:define name="body">
+	<h:form id="frmVer">
+		<p:panel id="pnlEdit" header="Componente para el ticket" position="center"  style="margin-bottom:20px">
+			<!-- ******************** TABLA RESPONSIVA ************************ -->
+			<div class="grid condensed">
+				<!-- ******************** FILA NUMERO 1 ************************ -->
+				<ui:decorate template="/page/templates/generalView.xhtml">
+					<ui:define name="label">
+						<p:outputLabel id="lblStatus" for="txtStatus" value="Estatus: "/>
+					</ui:define>
+					<ui:define name="value">
+						<p:outputLabel id="txtStatus"  value="#{ticketController.detailDtoEdit.dtkStatusSt}" style="width:100%"/>
+					</ui:define>
+				</ui:decorate>
+				
+				<ui:decorate template="/page/templates/generalView.xhtml">
+					<ui:define name="label">
+						<p:outputLabel id="lblEstimate" for="txtEstimate" value="Estimado: "/>
+					</ui:define>
+					<ui:define name="value">
+						<p:outputLabel id="txtEstimate"  value="#{ticketController.detailDtoEdit.ticketDetail.dtkStimated}" style="width:100%"/>
+					</ui:define>
+				</ui:decorate>
+				
+				<ui:decorate template="/page/templates/generalView.xhtml">
+					<ui:define name="label">
+						<p:outputLabel id="lblFpln" for="txtFpln" value="Fecha plan entrega: "/>
+					</ui:define>
+					<ui:define name="value">
+						<p:outputLabel id="txtFpln"  value="#{ticketController.detailDtoEdit.dtkDateEndPlanDt}" style="width:100%">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+						</p:outputLabel>
+					</ui:define>
+				</ui:decorate>
+				
+				<ui:decorate template="/page/templates/generalView.xhtml">
+					<ui:define name="label">
+						<p:outputLabel id="lblFini" for="txtFini" value="Fecha inicio: "/>
+					</ui:define>
+					<ui:define name="value">
+						<p:outputLabel id="txtFini"  value="#{ticketController.detailDtoEdit.dtkDateIniDt}" style="width:100%">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+						</p:outputLabel>
+					</ui:define>
+				</ui:decorate>
+				
+				<ui:decorate template="/page/templates/generalView.xhtml">
+					<ui:define name="label">
+						<p:outputLabel id="lblFfin" for="txtFfin" value="Fecha entrega "/>
+					</ui:define>
+					<ui:define name="value">
+						<p:outputLabel id="txtFfin"  value="#{ticketController.detailDtoEdit.dtkDateEndDt}" style="width:100%">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+						</p:outputLabel>
+					</ui:define>
+				</ui:decorate>
+				
+				<ui:decorate template="/page/templates/generalView.xhtml">
+					<ui:define name="label">
+						<p:outputLabel id="lblComp" for="slcComp" value="Componente"/>
+					</ui:define>
+					<ui:define name="value">
+						<p:outputLabel id="slcComp"  value="#{ticketController.detailDtoEdit.dtkCmpName}" style="width:100%"/>
+					</ui:define>
+				</ui:decorate>
+				
+				<ui:decorate template="/page/templates/generalView.xhtml">
+					<ui:define name="label">
+						<p:outputLabel id="lblResp" for="slcResp" value="Responsable"/>
+					</ui:define>
+					<ui:define name="value">
+						<p:outputLabel id="slcResp"  value="#{ticketController.detailDtoEdit.dtkRpsName} #{ticketController.detailDtoEdit.dtkRpsLastName}" style="width:100%"/>
+					</ui:define>
+				</ui:decorate>	
+				
+			</div>
+		</p:panel>
+		<div style="margin-top: 10px; margin-bottom: 10px;">
+			<p:commandButton id="btnCancelar" value="Cancelar" action="#{ticketController.cancelViewDetail()}" 
+				immediate="true" ajax="false" style="margin-left: 5px;"/>	
+		</div>
+	</h:form>		
+</ui:define>
+</ui:composition>
+</html>

@@ -156,4 +156,19 @@ public class TicketDaoImpl extends JdbcDaoSupport implements TicketDao{
 		
 		return getJdbcTemplate().update(psc);
 	}
+	
+	@Override
+	public long delete(Ticket t) {
+		String sql = "DELETE FROM TICKET WHERE tck_id = ? ";
+		final PreparedStatementCreator psc = new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
+				 final PreparedStatement ps = conn.prepareStatement(sql);
+				        ps.setLong(1, t.getTckId());
+				 return ps;
+			}
+		};
+		
+		return getJdbcTemplate().update(psc);
+	}
 }

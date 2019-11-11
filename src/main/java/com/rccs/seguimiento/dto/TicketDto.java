@@ -105,6 +105,9 @@ public class TicketDto implements Serializable{
 		ticketDto.setTckTypeSt(Constants.TCK_TYPE.get(entity.getTckType()));
 		ticketDto.setTckStatusSt(Constants.TCK_STATUS.get(entity.getTckStatus()));
 		ticketDto.setTckFlowSt(Constants.TCK_FLOW.get(entity.getTckFlow()));
+		ticketDto.setTckDateIniDt(new Date(entity.getTckDateIni().getTime()));
+		ticketDto.setTckDateEndDt(new Date(entity.getTckDateEnd().getTime()));
+		ticketDto.setTckDateEndPlanDt(new Date(entity.getTckDateEndPlan().getTime()));
 		return ticketDto;
 	}
 	

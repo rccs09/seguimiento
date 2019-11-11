@@ -1,7 +1,11 @@
 package com.rccs.seguimiento.dao.impl;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +18,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.rccs.seguimiento.dao.TicketDetailDao;
 import com.rccs.seguimiento.dto.TicketDetailDto;
+import com.rccs.seguimiento.dto.TicketDto;
 import com.rccs.seguimiento.mapper.TicketDetailMapper;
 import com.rccs.seguimiento.model.TicketDetail;
-import com.rccs.seguimiento.utils.Constants;
 
 @Repository
 public class TicketDetailDaoImpl extends JdbcDaoSupport implements TicketDetailDao{
@@ -39,11 +46,9 @@ public class TicketDetailDaoImpl extends JdbcDaoSupport implements TicketDetailD
 	}
 	
 	@Override
-	public List<TicketDetailDto> findDtoByTicketId(int id) {
-		logger.info("Consulta detalles del ticket : " + id);
-//		String sql = "SELECT * FROM ticket_detail WHERE tck_id = ?";
-		System.out.println("222222222222222222222");
-		
+	public List<TicketDetailDto> findByDetDtoTicket(TicketDto tdto) {
+		logger.info("Consulta detalles DTO del ticket : " + tdto.getTicket().getTckId());
+
 		StringBuilder sql = new StringBuilder();
 		sql.append("select td.dtk_id,td.dtk_status,td.dtk_estimated,td.dtk_date_ini,td.dtk_date_end, ");
 		sql.append("td.dtk_date_end_plan,td.rps_id, td.tck_id,td.cmp_id, c.cmp_name ,r.rps_name,r.rps_last_name ");
@@ -52,15 +57,8 @@ public class TicketDetailDaoImpl extends JdbcDaoSupport implements TicketDetailD
 		sql.append("and td.cmp_id=c.cmp_id ");
 		sql.append("and tck_id = ?");
 		
-//		List<TicketDetail> result = new ArrayList<>();
-//		Object[] param = new Object[1];
-//		param[0] = new Integer(1);
-//		
-//		result = getJdbcTemplate().query(sb.toString(), param, new BeanPropertyRowMapper<>(TicketDetail.class));
-		System.out.println("33333: " + sql.toString());
-		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql.toString(), id);
+		List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql.toString(), tdto.getTicket().getTckId());
 		
-		System.out.println("44444444444444444444444 ROWS: " + rows.size());
 		List<TicketDetailDto> result = new ArrayList<>();
 		for (Map<String, Object> row : rows) {
 			TicketDetail t = new TicketDetail();
@@ -73,16 +71,13 @@ public class TicketDetailDaoImpl extends JdbcDaoSupport implements TicketDetailD
 			t.setRpsId((Integer)row.get("rps_id"));
 			t.setTckId((Integer)row.get("tck_id"));
 			t.setCmpId((Integer)row.get("cmp_id"));
-			System.out.println(t.toString());
 			
-			TicketDetailDto dto = new TicketDetailDto();
-			dto.setTicketDetail(t);
+			TicketDetailDto dto = TicketDetailDto.entityToDto(t);
 			dto.setDtkCmpName((String)row.get("cmp_name"));
 			dto.setDtkRpsLastName((String)row.get("rps_last_name"));
 			dto.setDtkRpsName((String)row.get("rps_name"));
-			dto.setDtkStatusSt(Constants.DTCK_STATUS.get(t.getDtkStatus()));
+			dto.setTicketDto(tdto);
 
-			System.out.println(dto.toString());
 			result.add(dto);
 		}
 		
@@ -91,7 +86,7 @@ public class TicketDetailDaoImpl extends JdbcDaoSupport implements TicketDetailD
 	
 	@Override
 	public List<TicketDetail> findByTicketId(int id) {
-		logger.info("Consulta detalles del ticket : " + id);
+		logger.info("Consulta detalles del ticket por ID : " + id);
 		String sql = "SELECT * FROM ticket_detail WHERE tck_id = ?";
 		
 		List<TicketDetail> result = new ArrayList<>();
@@ -106,6 +101,77 @@ public class TicketDetailDaoImpl extends JdbcDaoSupport implements TicketDetailD
 	public List<TicketDetail> findByResposableId(int respId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public long save(TicketDetailDto t) {
+		final String sql = "INSERT INTO ticket_detail (dtk_status,dtk_estimated,dtk_date_ini,dtk_date_end,dtk_date_end_plan,rps_id,tck_id,cmp_id) "
+				+ "VALUES (?,?,?,?,?,?,?,?)";
+		System.out.println(t.getTicketDetail().getDtkStatus());
+		System.out.println(t.getTicketDetail().getDtkStimated());
+		System.out.println(t.getTicketDetail().getDtkDateIni());
+		System.out.println("RESPOM: " +t.getTicketDetail().getRpsId());
+		System.out.println("TICKET: " +t.getTicketDetail().getTckId());
+		System.out.println("COMPON: " + t.getTicketDetail().getCmpId());
+		
+		final PreparedStatementCreator psc = new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
+				 final PreparedStatement ps = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+				 		ps.setInt(1, t.getTicketDetail().getDtkStatus());
+				 		ps.setBigDecimal(2, t.getTicketDetail().getDtkStimated());
+				 		ps.setTimestamp(3, t.getTicketDetail().getDtkDateIni());
+				        ps.setTimestamp(4, t.getTicketDetail().getDtkDateEnd());
+				        ps.setTimestamp(5, t.getTicketDetail().getDtkDateEndPlan());
+				        ps.setLong(6, t.getTicketDetail().getRpsId());
+				        ps.setLong(7, t.getTicketDto().getTicket().getTckId());
+				        ps.setLong(8, t.getTicketDetail().getCmpId());
+				 return ps;
+			}
+		};
+		
+		final KeyHolder holder = new GeneratedKeyHolder();
+		return getJdbcTemplate().update(psc, holder);
+	}
+
+	@Override
+	public long update(TicketDetailDto t) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("UPDATE ticket_detail SET dtk_status=?, dtk_estimated=?, dtk_date_ini=?, dtk_date_end=?, dtk_date_end_plan=?, ");
+		sql.append("rps_id=?, tck_id=?, cmp_id=? WHERE dtk_id=? ");
+		
+		final PreparedStatementCreator psc = new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
+				 final PreparedStatement ps = conn.prepareStatement(sql.toString());
+				 	ps.setInt(1, t.getTicketDetail().getDtkStatus());
+			 		ps.setBigDecimal(2, t.getTicketDetail().getDtkStimated());
+			 		ps.setTimestamp(3, t.getTicketDetail().getDtkDateIni());
+			        ps.setTimestamp(4, t.getTicketDetail().getDtkDateEnd());
+			        ps.setTimestamp(5, t.getTicketDetail().getDtkDateEndPlan());
+			        ps.setLong(6, t.getTicketDetail().getRpsId());
+			        ps.setLong(7, t.getTicketDto().getTicket().getTckId());
+			        ps.setLong(8, t.getTicketDetail().getCmpId());
+			        ps.setLong(9, t.getTicketDetail().getDtkId());
+				 return ps;
+			}
+		};
+		
+		return getJdbcTemplate().update(psc);
+	}
+
+	@Override
+	public long delete(TicketDetailDto t) {
+		String sql = "DELETE FROM ticket_detail WHERE dtk_id=? ";
+		final PreparedStatementCreator psc = new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
+				 final PreparedStatement ps = conn.prepareStatement(sql);
+				        ps.setLong(1, t.getTicketDetail().getDtkId());
+				 return ps;
+			}
+		};
+		return getJdbcTemplate().update(psc);
 	}
 
 }

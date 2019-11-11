@@ -64,7 +64,7 @@ and b.cli_id = c.cli_id;
 
 
 
-
+----> CONSULTA DE LISTA DE TICKETS
 select td.dtk_id,td.dtk_status,td.dtk_estimated,td.dtk_date_ini,td.dtk_date_end,td.dtk_date_end_plan,
 td.rps_id, td.tck_id,td.cmp_id, c.cmp_name ,r.rps_name,r.rps_last_name
 from ticket_detail td, responsible r, component c
@@ -75,14 +75,17 @@ and td.cmp_id=c.cmp_id;
 --select * from ticket;
 
 SELECT c.relname FROM pg_class c WHERE c.relkind = 'S';
-
 --SELECT CURRVAL() AS id FROM ticket_tck_id_seq;
-
 --SELECT nextval('ticket_tck_id_seq');
-
 -- select td.dtk_id,td.dtk_status,td.dtk_estimated,td.dtk_date_ini,td.dtk_date_end, td.dtk_date_end_plan,td.rps_id, td.tck_id,td.cmp_id, c.cmp_name ,r.rps_name,r.rps_last_name from ticket_detail td, responsible r, component c where td.rps_id = r.rps_id and td.cmp_id=c.cmp_id and tck_id = 1
 
-
+----> CONSULTA DE LISTA DE DETALLES DE TICKETS
+select td.dtk_id,td.dtk_status,td.dtk_estimated,td.dtk_date_ini,td.dtk_date_end, 
+td.dtk_date_end_plan,td.rps_id, td.tck_id,td.cmp_id, c.cmp_name ,r.rps_name,r.rps_last_name 
+from ticket_detail td, responsible r, component c 
+where td.rps_id = r.rps_id 
+and td.cmp_id=c.cmp_id 
+and tck_id = ?
 
 
 

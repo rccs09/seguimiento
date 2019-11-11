@@ -18,8 +18,9 @@
 					<td align="center" colspan="2">
 						<h:panelGroup>
 							<p:commandButton value="Si" action="#{ticketController.deleteTicket()}" 
-		    							oncomplete="PF('diagModalDeleteTicket').hide();" update="frmModalDeleteTicket" ajax="false" />
-		        			<p:commandButton value="No" oncomplete="PF('diagModalDeleteTicket').hide();"  style="margin-left: 5px;"/>
+		    							oncomplete="PF('diagModalDeleteTicket').hide(); " update="frmModalDeleteTicket , :frmTicketList:pnlResultados , :frmTicketList:pnlSearch" />
+		    				<p:commandButton value="No" action="#{ticketController.cancelDelTicket()}" 
+		    							oncomplete="PF('diagModalDeleteTicket').hide();" update="frmModalDeleteTicket , frmTicketList" ajax="false" style="margin-left: 5px;"/>
 						</h:panelGroup>
 					</td>
 				</tr>

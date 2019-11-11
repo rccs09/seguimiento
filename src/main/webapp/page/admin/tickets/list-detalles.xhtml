@@ -8,6 +8,7 @@
 	<ui:composition template="/page/templates/template.xhtml">
 		<ui:define name="body">
 			<h:form id="frmLista" enctype="multipart/form-data" acceptcharset="UTF-8">
+				<p:messages autoUpdate="true" globalOnly="true" />
 		    	<p:panel id="pnlTabla" header="Detalles del ticket"  >
 		    		 <p:dataTable id="dtResultado" var="item" value="#{ticketController.listTicketDetail}"
 		    		 		rows="10" paginator="true"
@@ -27,30 +28,23 @@
 				        </p:column>
 
 				        <p:column headerText="Opción" style="width:16%;text-align: center">
-				        	<p:commandLink value="Editar" action="#{ticketController.editStatus(item)}" ajax="false" style="margin-left: 5px;"/>
-				        	<p:commandLink value="Detalles" action="#{ticketController.editStatus(item)}" ajax="false" style="margin-left: 5px;"/>
-							<!-- 	
-				        	<p:commandLink value="Ver" action="#{administradorBancoForm.irVer(item)}" style="margin-left: 5px;"/>
+				        	<p:commandButton id="btnEdit" icon="ui-icon ui-icon-pencil" action="#{ticketController.goEditDetail(item)}" style="margin-left: 2px;" />
+				        	<p:tooltip id="ttEdit" for="btnEdit" value="Editar detalle"/>
 				        	
-				        	<p:commandLink value="Eliminar" action="#{administradorBancoForm.irModalEliminar(item)}" style="margin-left: 5px;">
-				        		<p:ajax oncomplete="PF('dialogoEliminarBanco').show();" update=":frmModalBancoEliminar"/>
-				        	</p:commandLink>
-				        	 -->
+				        	<p:commandButton id="btnView" icon="ui-icon ui-icon-clipboard" action="#{ticketController.goViewDetail(item)}" style="margin-left: 2px;"/>
+				        	<p:tooltip id="ttView" for="btnView" value="Ver detalle"/>
+				        	
 				        </p:column>
-				         
-				        
 				    </p:dataTable>
-
-				    <div style="margin-top: 10px; margin-bottom: 10px;">
-				   		<p:commandButton id="btnCrear" value="Crear Nuevo" action="#{ticketController.returnList()}" style="margin-left: 5px;" />
+				    
+ 					<div style="margin-top: 10px; margin-bottom: 10px;">
+				   		<p:commandButton id="btnCrear" value="Crear Nuevo" action="#{ticketController.goNewDetail()}" style="margin-left: 5px;" />
 				    	<p:commandButton id="btnRegresar" value="Regresar" action="#{ticketController.returnList()}" style="margin-left: 5px;" />
 				    </div>
-
+				   
 		    	</p:panel>
+		    	
 		    </h:form>
-		    <!-- 
-		    <ui:include src="/paginas/administracion/crudEntidades/banco/modalEliminar.xhtml" />
-		     -->
 		</ui:define>
 		
 	</ui:composition>

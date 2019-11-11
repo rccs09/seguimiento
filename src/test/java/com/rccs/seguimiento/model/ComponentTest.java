@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class ComponentTest {
 	@Test
 	public void testAllSet() {
-		Component c = new Component();
+		ComponentSol c = new ComponentSol();
 		c.setCmpId(1);
 		c.setCmpName("MUA");
 		c.setSolId(1);
@@ -21,7 +21,7 @@ public class ComponentTest {
 	
 	@Test
 	public void testAllGet() {
-		Component c = new Component(1, "MUA", 1);
+		ComponentSol c = new ComponentSol(1, "MUA", 1);
 		assertNotNull(c.getCmpId());
 		assertNotNull(c.getCmpName());
 		assertNotNull(c.getSolId());
